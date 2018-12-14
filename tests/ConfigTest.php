@@ -1,5 +1,5 @@
 <?php
-namespace sersid\config\tests;
+namespace smarteng\config\tests;
 
 use Yii;
 use yii\codeception\TestCase;
@@ -10,7 +10,7 @@ class ConfigTest extends TestCase
     public function testMe()
     {
         /**
-         * @var $config \sersid\config\components\Config
+         * @var $config \smarteng\config\components\Config
          */
         $config = \Yii::$app->config;
         $config->deleteAll();

@@ -4,10 +4,10 @@ use yii\db\Migration;
 
 /**
  * Install
- * php yii migrate --migrationPath=@vendor/sersid/yii2-config/migrations
+ * php yii migrate --migrationPath=@vendor/smarteng/yii2-config/migrations
  * 
  * Uninstall
- * php yii migrate/down --migrationPath=@vendor/sersid/yii2-config/migrations
+ * php yii migrate/down --migrationPath=@vendor/smarteng/yii2-config/migrations
  */
 class m141028_111823_config extends Migration
 {
@@ -21,10 +21,15 @@ class m141028_111823_config extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
         $this->createTable($this->tableName, [
-            'key' => Schema::TYPE_STRING,
-            'value' => Schema::TYPE_TEXT,
+            'id' => $this->primaryKey(),
+            'key' => $this->string(50)->notNull()->unique(),
+            'value' => $this->text()->null(),
         ], $tableOptions);
-        $this->addPrimaryKey('key', $this->tableName, ['key']);
+        $this->createIndex(
+            $this->indexName,
+            $this->tableName,
+            'key',
+            true);
     }
 
     public function down()

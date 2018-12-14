@@ -1,13 +1,13 @@
 {
-    "name": "sersid/yii2-config",
-    "description": "Yii2 manage configuration from database",
+    "name": "smarteng/yii2-config",
+    "description": "Yii2 manage config from database",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"," config"],
     "license": "BSD-3-Clause",
     "authors": [
         {
-            "name": "Sersid",
-            "email": "sersONEd@gmail.com"
+            "name": "smarteng",
+            "email": "smarteng@qq.com"
         }
     ],
     "require": {
@@ -15,7 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "sersid\\config\\": ""
+            "smarteng\\config\\": ""
         }
+    },
+    "replace": {
+        "bower-asset/jquery": ">=1.11.0",
+        "bower-asset/inputmask": ">=3.2.0",
+        "bower-asset/punycode": ">=1.3.0",
+        "bower-asset/yii2-pjax": ">=2.0.0"
     }
 }
