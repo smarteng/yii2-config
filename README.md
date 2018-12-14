@@ -5,19 +5,16 @@ Manage configuration from database
 Installation
 ------------
 
-### One
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
-
 Either run
 
 ```sh
-php composer.phar require --prefer-dist sersid/yii2-config "*"
+php composer.phar require --prefer-dist smarteng/yii2-config "*"
 ```
 
 or add
 
 ```
-"sersid/yii2-config": "*"
+"smarteng/yii2-config": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -29,56 +26,44 @@ to the require section of your `composer.json` file.
 Applying migrations
 
 ```
-yii migrate --migrationPath=@vendor/sersid/yii2-config/migrations
+yii migrate --migrationPath=@vendor/smarteng/yii2-config/migrations
 ```
 
+Configuration
+-------------
 
-
-### Three
+In configuration file
 ```php
-$config = [
+'components' => [
+    'config' => [
+        'class' => '\smarteng\config\components\Config',
+        'provider' => [
+            'class' => '\smarteng\config\providers\DbProvider',
+            'tableName' => '{{%config}}',  // by default
+            'keyColumn' => 'key',                 // by default
+            'valueColumn' => 'value',             // by default
+        ]
+    ],
     ...
-    'components' => [
-        ...
-        'config' => [
-            'class' => 'sersid\config\components\Config',
-            'coding' => '...', // json of serialize. Default 'json'
-            'idConnection' => 'db', // The ID of the connection component
-            'tableName' => '{{%config}}', //Config table name
-            'idCache' => 'cache', // The ID of the cache component. Default null (no caching)
-            'cacheKey' => 'config.component', // The key identifying the value to be cached
-            'cacheDuration' => 360, // The number of seconds in which the cached value will expire. 0 means never expire. Default 0
-        ],
-    ]
-];
+]
 ```
+Create own provider
+--------------------
+1. Create Class for provider
+2. Implement `\smarteng\config\components\ConfigInterface`
+3. Change in the configuration file on your provider
 
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
-
-#### Set
+Db provider example
 ```php
-Yii::$app->config->set('foo', 'bar');
-Yii::$app->config->set('foo', ['bar', 'baz']);
-Yii::$app->config->set(['foo' => 'bar']);
-```
+$isSet = \Yii::$app->config->set('commission', '10');   // can throw an exception
+$isSet = \Yii::$app->config->safeSet('commission', '10');   // return false if something went wrong
 
-#### Get
-```php
-Yii::$app->config->get('zyx'); // null
-Yii::$app->config->get('zyx', 'default'); // 'default'
-Yii::$app->config->get('foo', 'default'); // 'bar'
-Yii::$app->config->get(['foo' => 'default']);
+$isSet = \Yii::$app->config->exists('commission');      // return true if key exists
+$value = \Yii::$app->config->get('commission');         // return '10';
 ```
-
-#### Delete
-```php
-Yii::$app->config->delete('foo');
-Yii::$app->config->deleteAll(); // delete all config
-```
-
 
 Uninstall
 ------------
@@ -86,5 +71,5 @@ Uninstall
 Applying migrations
 
 ```
-yii migrate/down --migrationPath=@vendor/sersid/yii2-config/migrations
+yii migrate/down --migrationPath=@vendor/smarteng/yii2-config/migrations
 ```
