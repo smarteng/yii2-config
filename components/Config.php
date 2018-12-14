@@ -114,10 +114,10 @@ class Config extends Component implements ConfigInterface
     public function set($key, $value)
     {
         $ret = $this->provider->set($key, $value);
-        if ($ret) {
+        if ($ret && !empty($this->data)) {
             $this->data[$key] = $value;
+            $this->setCache();
         }
-        $this->setCache();
     }
 
     /**
