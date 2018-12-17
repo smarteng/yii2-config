@@ -113,8 +113,9 @@ class Config extends Component implements ConfigInterface
      */
     public function set($key, $value)
     {
+        $this->getData();
         $ret = $this->provider->set($key, $value);
-        if ($ret && !empty($this->data)) {
+        if ($ret) {
             $this->data[$key] = $value;
             $this->setCache();
         }
@@ -127,6 +128,7 @@ class Config extends Component implements ConfigInterface
      */
     public function setAll(array $items)
     {
+        $this->getData();
         $this->provider->setAll($items);
         foreach ($items as $key => $val) {
             $this->data[$key] = $val;
